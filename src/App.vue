@@ -1,30 +1,92 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="container">
+    <h1 class="text-center ">COVID 19 TRACKING WITH DIFFERENT CHART</h1>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <h2 class="text-info">Positive</h2>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <LineChart :chartData="arrPositive"></LineChart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <h2 class="text-secondary">Hospitalized</h2>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <LineChart :chartData="arrHospitalized"></LineChart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <h2 class="text-warning">In ICU</h2>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <LineChart :chartData="arrInICU"></LineChart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <h2 class="text-warning">On Ventilators</h2>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <LineChart :chartData="arrOnVentilators"></LineChart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-3">
+        <h2 class="text-danger">Death</h2>
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <LineChart :chartData="arrDeath"></LineChart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import LineChart from "./components/LineChart";
+import { mapState } from "vuex";
 
-nav {
-  padding: 30px;
-}
+export default {
+  components: {
+    LineChart,
+  },
+  computed: {
+    ...mapState([
+      "arrPositive",
+      "arrHospitalized",
+      "arrInICU",
+      "arrOnVentilators",
+      "arrDeath",
+    ]),
+  },
+  data() {
+    return {};
+  },
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  mounted() {
+    this.$store.dispatch("getAPI");
+  },
+};
+</script>
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style >
 </style>
